@@ -1,0 +1,18 @@
+.game-info {
+  margin: 20px auto;
+}
+
+.grid {
+  outline: solid 1px black;
+  display: flex;
+  flex-wrap: wrap;
+  width: 600px;
+  height: 600px;
+  margin: auto;
+}
+
+.grid div {
+  outline: fuchsia 1px solid;
+  width: 10%;
+  height: 10%;
+}
