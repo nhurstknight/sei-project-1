@@ -55,9 +55,6 @@ function init() {
       case 37: 
         if (x > 0) shooterPosition--
         break
-      case 32: 
-        if (x > 0) shooterPosition--
-        break
       default:
         console.log('invalid key')
     }
