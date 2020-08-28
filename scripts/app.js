@@ -1,24 +1,19 @@
 //  set-up a grid
 // add shooter
-// 
-
-
 
 function init() {
 
   // * DOM ELEMENTS
   const grid = document.querySelector('.grid')
 
-  // * GRID 
-  const width = 15
-  const height = 10
-  const cellCount = width * height
+  // * GRID VARIABLES
+  const width = 10
+  const cellCount = width * width
   const cells = []
 
-  let shooterPosition = 142
-  const alienArmy = []
-  let alienArmyPosition = 0
-
+  // * GAME VARIABLES
+  let shooterPosition = 94
+  const aliens = [2, 3, 4, 5, 6, 7, 12, 13, 14, 15, 16, 17, 22, 23, 24,25, 26, 27]
 
   // * EXECUTION
   function addShooter() {
@@ -29,14 +24,11 @@ function init() {
     cells[shooterPosition].classList.remove('shooter')
   }
 
-  function addAlienArmy() {
-    cells[shooterPosition].classList.add('alien-army')
+  function addAliens(alien) {
+    aliens.forEach((alien, i) => {
+      cells[alien].classList.add('alien')
+    })
   }
-
-  function removeAlienArmy() {
-    cells[shooterPosition].classList.remove('alien-army')
-  }
-
 
 
   function makeGrid() { 
@@ -46,15 +38,15 @@ function init() {
       cells.push(cell)
       cell.setAttribute('id', i) 
       cell.textContent = i //remove this later
-    }
-    addShooter()
-    addAlienArmy()
+    }  
+    return
   }
-
+  
   function moveShooter(event) {
     removeShooter(shooterPosition)
-
+    
     const x = shooterPosition % width
+    const y = null
     
     switch (event.keyCode) {
       case 39:
@@ -63,23 +55,21 @@ function init() {
       case 37: 
         if (x > 0) shooterPosition--
         break
+      case 32: 
+        if (x > 0) shooterPosition--
+        break
       default:
-        console.log('no more moves')
+        console.log('invalid key')
     }
     addShooter(shooterPosition)
   }
 
-  function alienArmyDescends() {
-
-  }
-
-
   // * EVENTS
   makeGrid()
+  addShooter()
+  addAliens()
+
   document.addEventListener('keydown', moveShooter)
-  addAlienArmy()
-
-
-
+    
 }
 window.addEventListener('DOMContentLoaded', init)
