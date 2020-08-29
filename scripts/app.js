@@ -14,7 +14,7 @@ function init() {
   
   // * GAME VARIABLES
   let shooterPosition = 144
-  let aliens = [0, 1, 2, 3, 4, 5, 10, 11, 12, 13 ,14, 15, 20, 21, 22, 23, 24, 25, 26, 75, 63, 72]
+  let aliens = [0, 1, 2, 3, 4, 5, 10, 11, 12, 13 ,14, 15, 20, 21, 22, 23, 24, 25]
   
   // * EXECUTION
   function makeGrid() { 
@@ -42,6 +42,12 @@ function init() {
       cells[alien].classList.add('alien')
     })
   }
+
+  function removeAliens(alien) {
+    aliens.forEach((alien, i) => {
+      cells[alien].classList.remove('alien')
+    })
+  }
   
   function moveShooter(event) {
     removeShooter(shooterPosition)
@@ -51,10 +57,10 @@ function init() {
     
     switch (event.keyCode) {
       case 39: // RIGHT
-        if (x < width - 1) shooterPosition++
+        if (x < width - 1) shooterPosition++ // need to fix between cells 140-149
         break
       case 37: // LEFT
-        if (x > 0) shooterPosition--
+        if (x > 0) shooterPosition-- // need to fix between cells 140-149
         break
       default:
         console.log('invalid key')
@@ -64,25 +70,33 @@ function init() {
       
   function startGame() {
     const startBtn = document.querySelector('.start')
-    // define the 'axis' that they are moving across
-    const skyline = aliens % width
-        
-    // write a for loop to run through the array of aliens
     aliens.forEach((alien, i) => {
-      if (skyline > width + 1) {
-        aliens = aliens++
-      } else {
-        console.log('no more moves')
+      for (let i = 0; i < 5; i++) {
+        removeAliens()
+        aliens = cells++
+        addAliens()
       }
     })
-  
-
   }
+  // define the 'axis' that they are moving across
+  // const skyline = aliens % width
+  
+  // write a for loop to run through the array of aliens
+  
+  //   aliens = cells++
+  // if (skyline > width + 1) {
+  //   aliens = aliens++
+  // } else {
+  //   console.log('no more moves')
+  // }
+
+  // }
 
   // * EVENTS
   makeGrid()
   addShooter()
   addAliens()
+
   
   document.addEventListener('keydown', moveShooter)
   
