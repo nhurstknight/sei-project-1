@@ -7,8 +7,8 @@ function init() {
   const grid = document.querySelector('.grid')
   
   // * GRID VARIABLES
-  const width = 15
-  const height = 10
+  const width = 10
+  const height = 15
   const cellCount = width * height
   const cells = []
   
@@ -69,8 +69,11 @@ function init() {
   }
       
   function startGame() {
+    // when the button is clicked by user
     const startBtn = document.querySelector('.start')
+    // for each item in the array called aliens
     aliens.forEach((alien, i) => {
+      // loop through this array 
       for (let i = 0; i < 5; i++) {
         removeAliens()
         aliens = cells++
