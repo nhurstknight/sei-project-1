@@ -59,18 +59,23 @@ function init() {
   }
 
   function moveAliens() {
-    
-    removeAliens()
-    aliens = aliens.map(alien => {
-      return alien + 1
-    })
-    addAliens()
+    let timerId = null
+    let count = 0
+
+    timerId = setInterval(() => {
+      removeAliens()
+      aliens = aliens.map(alien => {
+        return alien + 1
+      })
+      addAliens()
+    }, 2000);
   }
 
   function startGame() {
     moveAliens()
   }
 
+    
 
 
   // when the button is clicked by user
