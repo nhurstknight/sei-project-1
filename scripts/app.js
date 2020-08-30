@@ -1,11 +1,7 @@
-//  set-up a grid
-// add shooter
-
 function init() {
-
   // * DOM ELEMENTS
   const grid = document.querySelector('.grid')
-  
+
   // * GRID VARIABLES
   const width = 10
   const height = 15
@@ -15,6 +11,8 @@ function init() {
   // * GAME VARIABLES
   let shooterPosition = 144
   let aliens = [0, 1, 2, 3, 4, 5, 10, 11, 12, 13 ,14, 15, 20, 21, 22, 23, 24, 25]
+  const startBtn = document.querySelector('.start') // * move this to the top with your other variables
+  let alienTimer
   
   // * EXECUTION
   function makeGrid() { 
@@ -27,82 +25,79 @@ function init() {
     }  
     return
   }
-  
   function addShooter() {
     cells[shooterPosition].classList.add('shooter')
   }
-  
   function removeShooter() {
     cells[shooterPosition].classList.remove('shooter')
   }
-  
-  
   function addAliens(alien) {
     aliens.forEach((alien, i) => {
       cells[alien].classList.add('alien')
     })
   }
-
   function removeAliens(alien) {
     aliens.forEach((alien, i) => {
       cells[alien].classList.remove('alien')
     })
   }
-  
   function moveShooter(event) {
     removeShooter(shooterPosition)
-    
     const x = shooterPosition % width
-    const y = null // you might need this for the lazer beams, or does this live in another place?
-    
+
     switch (event.keyCode) {
       case 39: // RIGHT
-        if (x < width - 1) shooterPosition++ // need to fix between cells 140-149
+        if (x < width - 1) shooterPosition++
         break
       case 37: // LEFT
-        if (x > 0) shooterPosition-- // need to fix between cells 140-149
+        if (x > 0) shooterPosition--
         break
       default:
         console.log('invalid key')
     }
     addShooter(shooterPosition)
   }
-      
-  function startGame() {
-    // when the button is clicked by user
-    const startBtn = document.querySelector('.start')
-    // for each item in the array called aliens
-    aliens.forEach((alien, i) => {
-      // loop through this array 
-      for (let i = 0; i < 5; i++) {
-        removeAliens()
-        aliens = cells++
-        addAliens()
-      }
-    })
-  }
-  // define the 'axis' that they are moving across
-  // const skyline = aliens % width
-  
-  // write a for loop to run through the array of aliens
-  
-  //   aliens = cells++
-  // if (skyline > width + 1) {
-  //   aliens = aliens++
-  // } else {
-  //   console.log('no more moves')
-  // }
 
-  // }
+  function moveAliens() {
+    
+    removeAliens()
+    aliens = aliens.map(alien => {
+      return alien + 1
+    })
+    addAliens()
+  }
+
+  function startGame() {
+    moveAliens()
+  }
+
+
+
+  // when the button is clicked by user
+
+  // write a separate function called move aliens and call it here
+
+  // for each item in the array called aliens
+
+  // aliens.forEach((alien, i) => { // * use a map instead and set the result of the map to be the new aliens array
+
+  // * eg. aliens = aliens.map( etc etc ), so we are always keeping track of the alien position
+
+  // * inside the map just add 1 to each iteration to increase the index
+
+  // * before the map call remove aliens
+
+  // * after the map call add aliens
+
+  // * wrap everything in a timer
+  
+  
 
   // * EVENTS
   makeGrid()
   addShooter()
   addAliens()
-
-  
   document.addEventListener('keydown', moveShooter)
-  
   document.addEventListener('click', startGame)
 }
 window.addEventListener('DOMContentLoaded', init)
