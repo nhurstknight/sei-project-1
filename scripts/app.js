@@ -10,7 +10,7 @@ function init() {
   
   // * GAME VARIABLES
   let shooterPosition = 144
-  let aliens = [0, 1, 2, 3, 4, 5, 10, 11, 12, 13 ,14, 15, 20, 21, 22, 23, 24, 25]
+  let aliens = [0, 1, 2, 3, 4, 10, 11, 12, 13, 14, 20, 21, 22, 23, 24]
   const startBtn = document.querySelector('.start') // * move this to the top with your other variables
   let alienTimer
   
@@ -58,6 +58,8 @@ function init() {
     addShooter(shooterPosition)
   }
 
+  // stop when aliens get to 9, 19, 29 +10 and -1 to move left
+  // stop when aliens get to 1, 11, 21 +10 and +1 to move right
   function moveAliens() {
     let timerId = null
     let count = 0
@@ -70,6 +72,24 @@ function init() {
       addAliens()
     }, 2000);
   }
+
+
+  //   timerId = setInterval(() => {
+  //     removeAliens()
+  //     if (count >= 9) {
+  //       aliens = aliens.map(alien => {
+  //         return alien + 1
+  //       }) else if (count = 10) {
+  //         aliens = aliens.map(alien => {
+  //           return alien + 10
+  //         }) else if (count <= 19) {
+  //           aliens = aliens.map(alien => {
+  //           return alien - 1
+  //         })
+  //     })
+  //     addAliens()
+  //   }, 2000);
+  // }
 
   function startGame() {
     moveAliens()
