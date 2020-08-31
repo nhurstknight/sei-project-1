@@ -13,9 +13,7 @@ function init() {
   let aliens = [0, 1, 2, 3, 4, 10, 11, 12, 13, 14, 20, 21, 22, 23, 24]
   const startBtn = document.querySelector('.start') // * move this to the top with your other variables
   let alienTimer
-  // let lazerStartPosition = []
   let lazerPosition = []
-  let lazerTimer
   
   // * EXECUTION
   function makeGrid() { 
@@ -47,6 +45,7 @@ function init() {
   function addLazer() {
     cells[lazerPosition].classList.add('lazer')
   }
+
   function removeLazer() {
     cells[lazerPosition].classList.remove('lazer')
   }
@@ -63,7 +62,7 @@ function init() {
         if (x > 0) shooterPosition--
         break
       default:
-        console.log('invalid key')
+        console.log('invalid key to move shooter')
     }
     addShooter(shooterPosition)
   }
@@ -91,33 +90,43 @@ function init() {
     switch (event.keyCode) {
       case 32: // space bar to shoot
         lazerPosition = cells[shooterPosition - 10].classList.add('laser')
-      
-        let lazerTimerId = null
-        let lazerCount = 0
-
-        timerId = setInterval(() => {
-          if (laserCount >= 14) {
-            removeLazer()
-            lazerPosition = lazerPosition - 10
-            addLazer()
-          } else {
-            console.log(laserCount)
-          }
-        }, 1000)
+        
+        removeLazer()
+        lazerStartPosition 
         break
       default:
-        console.log('error with shootLazer function')
+        console.log('shootLazer did not work')
     }
   }
 
-  
+  // function shootLazer(event){
+  //   let laserCount = 0
+  //   let laserTimerId = null
+    
+  //   switch (event.keyCode) {
+  //     case 32: // space bar to shoot
+  //       
+  //       lazerPosition = cells[shooterPosition - 10].classList.add('laser')
+  //       laserTimerId = setInterval(() => {
+  //         if (laserCount >= 14) {
+  //           lazerPosition = lazerPosition - 10
+  //           addLazer()
+  //         } else {
+  //           removeLazer()
+  //         }
+  //       }, 1000)
+  //       break
+  //     default:
+  //       console.log('error with shootLazer function')
+  //   }
+  // }
 
   // * EVENTS
   makeGrid()
   addShooter()
   addAliens()
+  document.addEventListener('click', startGame)
   document.addEventListener('keydown', moveShooter)
   document.addEventListener('keydown', shootLazer)
-  document.addEventListener('click', startGame)
 }
 window.addEventListener('DOMContentLoaded', init)
