@@ -41,6 +41,12 @@ function init() {
       cells[alien].classList.remove('alien')
     })
   }
+  // function addLazer(alien) {
+  //   cells[shooterPosition - 10].classList.add('lazer')
+  // }
+  // function removeLazer(alien) {
+  //   cells[shooterPosition + 10].classList.remove('laser')
+  // }
   function moveShooter(event) {
     removeShooter(shooterPosition)
     const x = shooterPosition % width
@@ -51,6 +57,9 @@ function init() {
         break
       case 37: // LEFT
         if (x > 0) shooterPosition--
+        break
+      case 32: // space bar to shoot
+        if 
         break
       default:
         console.log('invalid key')
