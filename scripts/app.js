@@ -14,6 +14,7 @@ function init() {
   const startBtn = document.querySelector('.start') // * move this to the top with your other variables
   let alienTimer
   let lazerPosition = []
+  let lazerTimer
   
   // * EXECUTION
   function makeGrid() { 
@@ -85,19 +86,26 @@ function init() {
   function startGame() {
     moveAliens()
   }
-
+  
+  function moveLazer () {
+    removeLazer()
+    lazerPosition = cells[lazerPosition - 10].classList.add('laser')
+    addLazer()
+  }
+  
   function shootLazer(event){
     switch (event.keyCode) {
       case 32: // space bar to shoot
         lazerPosition = cells[shooterPosition - 10].classList.add('laser')
-        
-        removeLazer()
-        lazerStartPosition 
-        break
-      default:
-        console.log('shootLazer did not work')
+        let laserTimerId = null
+        let laserCount = 0
+
+        laserTimerId = setInterval(() => {
+          moveLazer()
+        }, 1000);
     }
   }
+
 
   // function shootLazer(event){
   //   let laserCount = 0
