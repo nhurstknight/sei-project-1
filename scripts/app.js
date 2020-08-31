@@ -13,7 +13,9 @@ function init() {
   let aliens = [0, 1, 2, 3, 4, 10, 11, 12, 13, 14, 20, 21, 22, 23, 24]
   const startBtn = document.querySelector('.start') // * move this to the top with your other variables
   let alienTimer
+  // let lazerStartPosition = []
   let lazerPosition = []
+  let lazerTimer
   
   // * EXECUTION
   function makeGrid() { 
@@ -43,10 +45,10 @@ function init() {
     })
   }
   function addLazer() {
-    cells[shooterPosition - 10].classList.add('lazer')
+    cells[lazerPosition].classList.add('lazer')
   }
-  function removeShooter() {
-    cells[].classList.remove('lazer')
+  function removeLazer() {
+    cells[lazerPosition].classList.remove('lazer')
   }
 
   function moveShooter(event) {
@@ -59,17 +61,6 @@ function init() {
         break
       case 37: // LEFT
         if (x > 0) shooterPosition--
-        break
-      case 32: // space bar to shoot
-      lazerPosition = cells[shooterPosition - 10].classList.add('laser')
-
-        let timerId = null
-        let count = 0
-
-        timerId = setInterval(() => {
-          addLazer
-
-        })
         break
       default:
         console.log('invalid key')
@@ -96,7 +87,29 @@ function init() {
     moveAliens()
   }
 
-  
+  function shootLazer(event){
+    switch (event.keyCode) {
+      case 32: // space bar to shoot
+        lazerPosition = cells[shooterPosition - 10].classList.add('laser')
+      
+        let lazerTimerId = null
+        let lazerCount = 0
+
+        timerId = setInterval(() => {
+          if (laserCount >= 14) {
+            removeLazer()
+            lazerPosition = lazerPosition - 10
+            addLazer()
+          } else {
+            console.log(laserCount)
+          }
+        }, 1000)
+        break
+      default:
+        console.log('error with shootLazer function')
+    }
+  }
+
   
 
   // * EVENTS
@@ -104,6 +117,7 @@ function init() {
   addShooter()
   addAliens()
   document.addEventListener('keydown', moveShooter)
+  document.addEventListener('keydown', shootLazer)
   document.addEventListener('click', startGame)
 }
 window.addEventListener('DOMContentLoaded', init)
