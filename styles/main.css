@@ -58,4 +58,9 @@ font-family: 'Lexend Zetta', sans-serif;
   background-position: top;
 }
 
-
+.grid div.laser {
+  background-image: url(../assets/lazer-shot.png);
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: top;
+}

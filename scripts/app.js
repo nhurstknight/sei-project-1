@@ -13,6 +13,7 @@ function init() {
   let aliens = [0, 1, 2, 3, 4, 10, 11, 12, 13, 14, 20, 21, 22, 23, 24]
   const startBtn = document.querySelector('.start') // * move this to the top with your other variables
   let alienTimer
+  let lazerPosition = []
   
   // * EXECUTION
   function makeGrid() { 
@@ -41,12 +42,13 @@ function init() {
       cells[alien].classList.remove('alien')
     })
   }
-  // function addLazer(alien) {
-  //   cells[shooterPosition - 10].classList.add('lazer')
-  // }
-  // function removeLazer(alien) {
-  //   cells[shooterPosition + 10].classList.remove('laser')
-  // }
+  function addLazer() {
+    cells[shooterPosition - 10].classList.add('lazer')
+  }
+  function removeShooter() {
+    cells[].classList.remove('lazer')
+  }
+
   function moveShooter(event) {
     removeShooter(shooterPosition)
     const x = shooterPosition % width
@@ -59,7 +61,15 @@ function init() {
         if (x > 0) shooterPosition--
         break
       case 32: // space bar to shoot
-        if 
+      lazerPosition = cells[shooterPosition - 10].classList.add('laser')
+
+        let timerId = null
+        let count = 0
+
+        timerId = setInterval(() => {
+          addLazer
+
+        })
         break
       default:
         console.log('invalid key')
@@ -82,48 +92,10 @@ function init() {
     }, 2000);
   }
 
-
-  //   timerId = setInterval(() => {
-  //     removeAliens()
-  //     if (count >= 9) {
-  //       aliens = aliens.map(alien => {
-  //         return alien + 1
-  //       }) else if (count = 10) {
-  //         aliens = aliens.map(alien => {
-  //           return alien + 10
-  //         }) else if (count <= 19) {
-  //           aliens = aliens.map(alien => {
-  //           return alien - 1
-  //         })
-  //     })
-  //     addAliens()
-  //   }, 2000);
-  // }
-
   function startGame() {
     moveAliens()
   }
 
-    
-
-
-  // when the button is clicked by user
-
-  // write a separate function called move aliens and call it here
-
-  // for each item in the array called aliens
-
-  // aliens.forEach((alien, i) => { // * use a map instead and set the result of the map to be the new aliens array
-
-  // * eg. aliens = aliens.map( etc etc ), so we are always keeping track of the alien position
-
-  // * inside the map just add 1 to each iteration to increase the index
-
-  // * before the map call remove aliens
-
-  // * after the map call add aliens
-
-  // * wrap everything in a timer
   
   
 
