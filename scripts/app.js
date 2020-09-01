@@ -13,8 +13,8 @@ function init() {
   let aliens = [0, 1, 2, 3, 4, 10, 11, 12, 13, 14, 20, 21, 22, 23, 24]
   const startBtn = document.querySelector('.start') // * move this to the top with your other variables
   let alienTimer
-  let lazerPosition = []
-  let lazerTimer
+  let lazerPosition
+  let laserTimer
   
   // * EXECUTION
   function makeGrid() { 
@@ -44,6 +44,9 @@ function init() {
       case 37: // LEFT
         if (x > 0) shooterPosition--
         break
+      case 32: // space bar to shoot
+        shootLazer()
+        break
       default:
         console.log('invalid key to move shooter')
     }
@@ -62,67 +65,55 @@ function init() {
     })
   }
 
-  // stop when aliens get to 9, 19, 29 +10 and -1 to move left
-  // stop when aliens get to 1, 11, 21 +10 and +1 to move right
+  // when the function moveAliens is called
+  // aliens will move +1 cell 
+  // when arrays reach the border of the grid +10 cells to aliens array
+  // move aliens -1
+  // when arrays reach the border of the grid +10 cells to aliens array
+  // loop back to the start of function
+  // stop function when aliens reach cell #129 (this should run endGame())
+
   function moveAliens() {
-    let timerId = null
     let count = 0
 
-    timerId = setInterval(() => {
+  
+    alienTimer = setInterval(() => {
       removeAliens()
       aliens = aliens.map(alien => {
         return alien + 1
       })
       addAliens()
-    }, 2000);
-  }
+    }, 100); 
+  } 
 
   function startGame() {
     moveAliens()
   }
 
   function addLazer() {
-    lazerPosition.forEach((lazer, i) => {
-      cells[lazer].classList.add('laser')
-    })
+    cells[lazerPosition].classList.add('laser')
   }
 
   function removeLazer() {
-    lazerPosition.forEach((lazer, i) => {
-      cells[lazer].classList.remove('laser')
-    })
+    cells[lazerPosition].classList.remove('laser')
   }
   
-  function moveLazer() {
-    let laserTimerId = null 
+  function shootLazer() {
     let laserCount = 0
-
-    laserTimerId = setInterval(() => {
+    lazerPosition = shooterPosition
+    laserTimer = setInterval(() => {
       removeLazer()
-      lazerPosition.map(lazer => {
-        
-      })
-      
-    }, 1000);
-    
-    //   laserTimerId = setInterval(() => {
-    //     removeLazer()
-    //     lazerPosition.map(lazer => {
-    //       return lazer - 10
-    //     })
-    //   }, 1000);
-
+      lazerPosition = lazerPosition - 10
+      addLazer()
+    }, 500);
   }
 
-  function shootLazer(event){
-    switch (event.keyCode) {
-      case 32: // space bar to shoot
-        lazerPosition.push(shooterPosition - 10)
-        addLazer()
-        moveLazer()
-        break
-      default:
-        console.log('NO BUENO')
+  //this function will need to the end game if the aliens reach the cell #129 
+  function endGame() {
+    if (aliens === ) { //
+      console.log('the game needs to end')
+    } else {
+      return
     }
   }
 
@@ -131,8 +122,8 @@ function init() {
   makeGrid()
   addShooter()
   addAliens()
+  endGame()
   document.addEventListener('click', startGame)
   document.addEventListener('keydown', moveShooter)
-  document.addEventListener('keydown', shootLazer)
 }
 window.addEventListener('DOMContentLoaded', init)
