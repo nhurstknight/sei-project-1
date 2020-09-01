@@ -33,12 +33,12 @@ function init() {
   function removeShooter() {
     cells[shooterPosition].classList.remove('shooter')
   }
-  function addAliens(alien) {
+  function addAliens() {
     aliens.forEach((alien, i) => {
       cells[alien].classList.add('alien')
     })
   }
-  function removeAliens(alien) {
+  function removeAliens() {
     aliens.forEach((alien, i) => {
       cells[alien].classList.remove('alien')
     })
@@ -87,16 +87,17 @@ function init() {
     moveAliens()
   }
   
-  function moveLazer () {
-    removeLazer()
-    lazerPosition = cells[lazerPosition - 10].classList.add('laser')
-    addLazer()
+  function moveLazer() {
+    lazerPosition.map(lazer => {
+      return lazer - 10
+    })
   }
-  
+  console.log(moveLazer)
+
   function shootLazer(event){
     switch (event.keyCode) {
       case 32: // space bar to shoot
-        lazerPosition = cells[shooterPosition - 10].classList.add('laser')
+        lazerPosition = shooterPosition - 10
         let laserTimerId = null
         let laserCount = 0
 
@@ -105,29 +106,6 @@ function init() {
         }, 1000);
     }
   }
-
-
-  // function shootLazer(event){
-  //   let laserCount = 0
-  //   let laserTimerId = null
-    
-  //   switch (event.keyCode) {
-  //     case 32: // space bar to shoot
-  //       
-  //       lazerPosition = cells[shooterPosition - 10].classList.add('laser')
-  //       laserTimerId = setInterval(() => {
-  //         if (laserCount >= 14) {
-  //           lazerPosition = lazerPosition - 10
-  //           addLazer()
-  //         } else {
-  //           removeLazer()
-  //         }
-  //       }, 1000)
-  //       break
-  //     default:
-  //       console.log('error with shootLazer function')
-  //   }
-  // }
 
   // * EVENTS
   makeGrid()
