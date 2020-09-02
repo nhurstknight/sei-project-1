@@ -41,7 +41,7 @@ font-family: 'Lexend Zetta', sans-serif;
   color: white;
   height: 6.66;
   width: 10%;
-  outline: yellow dashed 1px;
+  /* outline: yellow dashed 1px; */
 }
 
 .grid div.shooter {
@@ -52,10 +52,10 @@ font-family: 'Lexend Zetta', sans-serif;
 }
 
 .grid div.alien {
-  background-image: url(../assets/alien.png);
+  background-image: url(../assets/pink-alien.png);
   background-repeat: no-repeat;
-  background-size: 50%;
-  background-position: top;
+  background-size: 40%;
+  background-position: center;
 }
 
 .grid div.laser {
