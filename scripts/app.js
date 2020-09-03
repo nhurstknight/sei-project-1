@@ -109,7 +109,7 @@ function init() {
   function moveAliens() {
     const finalAlienIndex = movingRight ? aliens[aliens.length - 1].currentIndex : aliens[0].currentIndex
     const x = finalAlienIndex % width 
-    if (finalAlienIndex >= 70) {
+    if (finalAlienIndex >= 140) {
       gameOver()
       clearInterval(alienTimer)
     } else if ((x === width - 1 && movingRight) || (x === 0  && !movingRight)) { 
