@@ -7,6 +7,10 @@ function init() {
   const cellCount = width * height
   const cells = []
   // * GAME VARIABLES
+  const startBtn = document.querySelector('.start')
+  const playerScore = document.querySelector('.player-score')
+  const audio = document.querySelector('.sound')
+  let currentScore = 0
   let shooterPosition = 144
   let aliens = [
     { currentIndex: 20, isAlive: true },
@@ -35,15 +39,15 @@ function init() {
     { currentIndex: 63, isAlive: true },
     { currentIndex: 64, isAlive: true }
   ]
-  const startBtn = document.querySelector('.start')
-  const playerScore = document.querySelector('.player-score')
   let alienTimer
   let movingRight = true
-
+  
+  let ufoPosition = 9
+  let ufoCounter = 0
+  let ufoTimer
+  
   let laserPosition
   let laserTimer
-
-  let currentScore = 0
   
   // * EXECUTION
   function makeGrid() { 
@@ -74,7 +78,7 @@ function init() {
         break
       case 32: // space bar to shoot
         shootLaser()
-        // startGame()
+        startGame()
         break
       default:
         console.log('invalid key to move shooter')
@@ -97,9 +101,8 @@ function init() {
   function moveAliens() {
     const finalAlienIndex = movingRight ? aliens[aliens.length - 1].currentIndex : aliens[0].currentIndex
     const x = finalAlienIndex % width 
-    if (finalAlienIndex === 129) {
+    if (finalAlienIndex >= 120) {
       window.alert(`Game over. You Lose! Final score: ${currentScore}`)
-      console.log('finalAlienIndex = 129')
       clearInterval(alienTimer)
     } else if ((x === width - 1 && movingRight) || (x === 0  && !movingRight)) { 
       aliens = aliens.map(alien => {
@@ -123,6 +126,26 @@ function init() {
     } 
   }
 
+  function addUfo() {
+    cells[ufoPosition].classList.add('ufo')
+  }
+  function removeUfo() {
+    cells[ufoPosition].classList.remove('ufo')
+  }
+
+  function moveUfo() {
+    ufoTimer = setInterval(() => {
+      ufoCounter++
+      if (ufoCounter < 100) {
+        removeUfo()
+        ufoPosition = ufoPosition - 1
+        addUfo()
+      }
+    }, 300)
+    console.log(ufoTimer)
+  }
+
+
   // Laser functions
   function addLaser() {
     if (cells[laserPosition].classList.contains('alien')) {
@@ -133,14 +156,20 @@ function init() {
       clearInterval(laserTimer)
       score()
       return
+    } else if (laserPosition <= 9 ){
+      cells[laserPosition].classList.remove('laser')
+      clearInterval(laserTimer)
+      console.log('lazer stops')
     }
     cells[laserPosition].classList.add('laser')
   }
 
   function removeLaser() {
-    cells[laserPosition].classList.remove('laser') 
+    cells[laserPosition].classList.remove('laser')
   }
   function shootLaser() {
+    audio.src = '../sounds/laser1.wav'
+    audio.play()
     clearInterval(laserTimer)
     // const laserCount = 0
     laserPosition = shooterPosition
@@ -158,7 +187,11 @@ function init() {
       removeAliens()
       moveAliens()
       addAliens()
-    }, 200)
+    }, 300)
+    // clearInterval(ufoTimer)
+    // ufoTimer = setInterval(() => {
+
+    // })
   }
   function score() {
     currentScore = currentScore + 10

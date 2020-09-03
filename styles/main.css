@@ -1,7 +1,7 @@
 body {
 display: flex;
 flex-direction: column;
-background-color: black;
+background-image: url();
 font-family: 'Lexend Zetta', sans-serif;
 }
 
@@ -28,6 +28,7 @@ font-family: 'Lexend Zetta', sans-serif;
 }
 
 .grid {
+  background-color: black;
   outline: solid white 1px;
   display: flex;
   flex-wrap: wrap;
@@ -59,7 +60,14 @@ font-family: 'Lexend Zetta', sans-serif;
 }
 
 .grid div.laser {
-  background-image: url(../assets/lazer-shot.png);
+  background-image: url(../assets/red-laser-beam.png);
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: top;
+}
+
+.grid div.ufo {
+  background-image: url(../assets/UFO.png);
   background-repeat: no-repeat;
   background-size: 50%;
   background-position: top;
