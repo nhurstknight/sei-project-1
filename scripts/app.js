@@ -9,16 +9,6 @@ function init() {
   // * GAME VARIABLES
   let shooterPosition = 144
   let aliens = [
-    { currentIndex: 0, isAlive: true },
-    { currentIndex: 1, isAlive: true },
-    { currentIndex: 2, isAlive: true },
-    { currentIndex: 3, isAlive: true },
-    { currentIndex: 4, isAlive: true },
-    { currentIndex: 11, isAlive: true },
-    { currentIndex: 10, isAlive: true },
-    { currentIndex: 12, isAlive: true },
-    { currentIndex: 13, isAlive: true },
-    { currentIndex: 14, isAlive: true },
     { currentIndex: 20, isAlive: true },
     { currentIndex: 21, isAlive: true },
     { currentIndex: 22, isAlive: true },
@@ -33,7 +23,17 @@ function init() {
     { currentIndex: 41, isAlive: true },
     { currentIndex: 42, isAlive: true },
     { currentIndex: 43, isAlive: true },
-    { currentIndex: 44, isAlive: true }
+    { currentIndex: 44, isAlive: true },
+    { currentIndex: 50, isAlive: true },
+    { currentIndex: 51, isAlive: true },
+    { currentIndex: 52, isAlive: true },
+    { currentIndex: 53, isAlive: true },
+    { currentIndex: 54, isAlive: true },
+    { currentIndex: 60, isAlive: true },
+    { currentIndex: 61, isAlive: true },
+    { currentIndex: 62, isAlive: true },
+    { currentIndex: 63, isAlive: true },
+    { currentIndex: 64, isAlive: true }
   ]
   const startBtn = document.querySelector('.start')
   const playerScore = document.querySelector('.player-score')
@@ -81,6 +81,8 @@ function init() {
     }
     addShooter(shooterPosition)
   }
+
+  // Aliens functions
   function addAliens() {
     aliens.forEach((alien) => {
       if (alien.isAlive)
@@ -125,19 +127,22 @@ function init() {
   function addLaser() {
     if (cells[laserPosition].classList.contains('alien')) {
       const hitAlien = aliens.find(alien => alien.currentIndex === laserPosition)
+      aliens = aliens.filter(alien => alien.isAlive !== false)
       hitAlien.isAlive = !hitAlien.isAlive
+      cells[laserPosition].classList.remove('alien')    
       clearInterval(laserTimer)
       score()
       return
     }
     cells[laserPosition].classList.add('laser')
   }
+
   function removeLaser() {
     cells[laserPosition].classList.remove('laser') 
   }
   function shootLaser() {
     clearInterval(laserTimer)
-    const laserCount = 0
+    // const laserCount = 0
     laserPosition = shooterPosition
     laserTimer = setInterval(() => {
       removeLaser()
