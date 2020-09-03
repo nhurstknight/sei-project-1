@@ -31,15 +31,15 @@ font-family: 'Lexend Zetta', sans-serif;
   outline: solid white 1px;
   display: flex;
   flex-wrap: wrap;
-  width: 800px;
-  height: 400px;
+  width: 1000px;
+  height: 600px;
   margin: auto;
 }
 
 .grid div {
   font-size: 12px;
   color: white;
-  height: 6.66;
+  height: 6.66%;
   width: 10%;
   /* outline: yellow dashed 1px; */
 }

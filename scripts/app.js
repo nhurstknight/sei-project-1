@@ -39,8 +39,10 @@ function init() {
   const playerScore = document.querySelector('.player-score')
   let alienTimer
   let movingRight = true
+
   let laserPosition
   let laserTimer
+
   let currentScore = 0
   
   // * EXECUTION
@@ -72,7 +74,7 @@ function init() {
         break
       case 32: // space bar to shoot
         shootLaser()
-        startGame()
+        // startGame()
         break
       default:
         console.log('invalid key to move shooter')
@@ -93,7 +95,11 @@ function init() {
   function moveAliens() {
     const finalAlienIndex = movingRight ? aliens[aliens.length - 1].currentIndex : aliens[0].currentIndex
     const x = finalAlienIndex % width 
-    if ((x === width - 1 && movingRight) || (x === 0  && !movingRight)) { 
+    if (finalAlienIndex === 129) {
+      window.alert(`Game over. You Lose! Final score: ${currentScore}`)
+      console.log('finalAlienIndex = 129')
+      clearInterval(alienTimer)
+    } else if ((x === width - 1 && movingRight) || (x === 0  && !movingRight)) { 
       aliens = aliens.map(alien => {
         return {
           ...alien, currentIndex: alien.currentIndex + width
@@ -112,16 +118,10 @@ function init() {
           ...alien, currentIndex: alien.currentIndex - 1
         }
       })
-    }
+    } 
   }
-  function startGame() {
-    clearInterval(alienTimer)
-    alienTimer = setInterval(() => {
-      removeAliens()
-      moveAliens()
-      addAliens()
-    },1000)
-  }
+
+  // Laser functions
   function addLaser() {
     if (cells[laserPosition].classList.contains('alien')) {
       const hitAlien = aliens.find(alien => alien.currentIndex === laserPosition)
@@ -131,39 +131,54 @@ function init() {
       return
     }
     cells[laserPosition].classList.add('laser')
-    
   }
   function removeLaser() {
     cells[laserPosition].classList.remove('laser') 
   }
   function shootLaser() {
     clearInterval(laserTimer)
-    // const laserCount = 0
+    const laserCount = 0
     laserPosition = shooterPosition
     laserTimer = setInterval(() => {
       removeLaser()
       laserPosition = laserPosition - 10
       addLaser()
-    }, 200) 
-  }  
+    }, 50) 
+  } 
+
+  // Game functions
+  function startGame() {
+    clearInterval(alienTimer)
+    alienTimer = setInterval(() => {
+      removeAliens()
+      moveAliens()
+      addAliens()
+    }, 200)
+  }
   function score() {
     currentScore = currentScore + 10
     playerScore.textContent = currentScore
+    endGame()
   }
-  // function endGame() {
-  //   // if aliens[aliens.length -1].currentindex || currentScore === 250 || all alien.isAlive === false
-  //   // clear score
-  //   // reset timers
-  //   // reset aliens
-  //   // reset shooterPosition
-  // }
-  
- // * EVENTSgit 
+  function endGame() {
+    // clear score
+    // reset timers
+    // reset aliens
+    // reset shooterPosition
+    if (currentScore < 250) {
+      console.log('keep playing')
+    } else if (currentScore === 250) {
+      window.alert(`Player wins! Final score: ${currentScore}`)
+      clearInterval(alienTimer)
+    } 
+  }
+
+  // * EVENTS   
   makeGrid()
   addShooter()
   addAliens()
-  // endGame()
-  document.addEventListener('click', startGame)
+  
+  startBtn.addEventListener('click', startGame)
   document.addEventListener('keydown', moveShooter)
 }
 window.addEventListener('DOMContentLoaded', init)
