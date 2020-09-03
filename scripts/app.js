@@ -7,12 +7,21 @@ function init() {
   const cellCount = width * height
   const cells = []
   // * GAME VARIABLES
+
   const startBtn = document.querySelector('.start')
   const playerScore = document.querySelector('.player-score')
   const audio = document.querySelector('.sound')
+  const startPopUp = document.querySelector('.start-pop-up')
+  const endPopUp = document.querySelector('.end-pop-up')
+  
   let currentScore = 0
   let shooterPosition = 144
   let aliens = [
+    { currentIndex: 10, isAlive: true },
+    { currentIndex: 11, isAlive: true },
+    { currentIndex: 12, isAlive: true },
+    { currentIndex: 13, isAlive: true },
+    { currentIndex: 14, isAlive: true },
     { currentIndex: 20, isAlive: true },
     { currentIndex: 21, isAlive: true },
     { currentIndex: 22, isAlive: true },
@@ -33,33 +42,32 @@ function init() {
     { currentIndex: 52, isAlive: true },
     { currentIndex: 53, isAlive: true },
     { currentIndex: 54, isAlive: true },
-    { currentIndex: 60, isAlive: true },
-    { currentIndex: 61, isAlive: true },
-    { currentIndex: 62, isAlive: true },
-    { currentIndex: 63, isAlive: true },
-    { currentIndex: 64, isAlive: true }
   ]
   let alienTimer
   let movingRight = true
   
   let ufoPosition = 9
-  let ufoCounter = 0
   let ufoTimer
   
   let laserPosition
   let laserTimer
   
-  // * EXECUTION
+  // * EXECUTION *
+  // Grid
   function makeGrid() { 
     for (let i = 0; i < cellCount; i++) { 
       const cell = document.createElement('div')
       grid.appendChild(cell)
       cells.push(cell)
       cell.setAttribute('id', i) 
-      // cell.textContent = i //remove this later
+      cell.textContent = i //remove this later
+      setTimeout(() => {
+      }, 5000)
     }  
     return
   }
+
+  // Shooter
   function addShooter() {
     cells[shooterPosition].classList.add('shooter')
   }
@@ -86,7 +94,7 @@ function init() {
     addShooter(shooterPosition)
   }
 
-  // Aliens functions
+  // Aliens
   function addAliens() {
     aliens.forEach((alien) => {
       if (alien.isAlive)
@@ -101,8 +109,8 @@ function init() {
   function moveAliens() {
     const finalAlienIndex = movingRight ? aliens[aliens.length - 1].currentIndex : aliens[0].currentIndex
     const x = finalAlienIndex % width 
-    if (finalAlienIndex >= 120) {
-      window.alert(`Game over. You Lose! Final score: ${currentScore}`)
+    if (finalAlienIndex >= 70) {
+      gameOver()
       clearInterval(alienTimer)
     } else if ((x === width - 1 && movingRight) || (x === 0  && !movingRight)) { 
       aliens = aliens.map(alien => {
@@ -126,27 +134,29 @@ function init() {
     } 
   }
 
+  // UFO
   function addUfo() {
     cells[ufoPosition].classList.add('ufo')
   }
   function removeUfo() {
     cells[ufoPosition].classList.remove('ufo')
   }
-
   function moveUfo() {
+    // audio.src = '../sounds/ufo2.wav'
+    // audio.play()
     ufoTimer = setInterval(() => {
-      ufoCounter++
-      if (ufoCounter < 100) {
+      if (ufoPosition > 0) {
         removeUfo()
         ufoPosition = ufoPosition - 1
         addUfo()
+      // } else {
+      //   clearInterval(ufoTimer)
       }
-    }, 300)
-    console.log(ufoTimer)
+    }, 500)
   }
+  
 
-
-  // Laser functions
+  // Laser
   function addLaser() {
     if (cells[laserPosition].classList.contains('alien')) {
       const hitAlien = aliens.find(alien => alien.currentIndex === laserPosition)
@@ -171,7 +181,7 @@ function init() {
     audio.src = '../sounds/laser1.wav'
     audio.play()
     clearInterval(laserTimer)
-    // const laserCount = 0
+    // const laserCount = 0 //does this have a purpose?
     laserPosition = shooterPosition
     laserTimer = setInterval(() => {
       removeLaser()
@@ -180,42 +190,43 @@ function init() {
     }, 50) 
   } 
 
-  // Game functions
+  // Game
   function startGame() {
     clearInterval(alienTimer)
+    // clearInterval(ufoTimer)
     alienTimer = setInterval(() => {
       removeAliens()
       moveAliens()
       addAliens()
-    }, 300)
-    // clearInterval(ufoTimer)
-    // ufoTimer = setInterval(() => {
-
-    // })
+    }, 500)
+    moveUfo()
   }
   function score() {
     currentScore = currentScore + 10
     playerScore.textContent = currentScore
-    endGame()
+    winGame()
   }
-  function endGame() {
-    // clear score
-    // reset timers
-    // reset aliens
-    // reset shooterPosition
-    if (currentScore < 250) {
-      console.log('keep playing')
-    } else if (currentScore === 250) {
+  function winGame() {
+    if (currentScore === 250) {
+      // audio.src = ''
+      // audio.play()
       window.alert(`Player wins! Final score: ${currentScore}`)
+      endPopUp.textContent = `Player wins! Final score: ${currentScore}`
       clearInterval(alienTimer)
     } 
+  }
+  function gameOver() {
+    // audio.src = ''
+    // audio.play()
+    window.alert(`Game over. You Lose! Final score: ${currentScore}`)
+    endPopUp.textContent = `Game over. You Lose! Final score: ${currentScore}`
+    console.log(endPopUp)
   }
 
   // * EVENTS   
   makeGrid()
   addShooter()
   addAliens()
-  
   startBtn.addEventListener('click', startGame)
   document.addEventListener('keydown', moveShooter)
 }

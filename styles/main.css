@@ -3,16 +3,31 @@ display: flex;
 flex-direction: column;
 background-image: url();
 font-family: 'Lexend Zetta', sans-serif;
+background: black;
+}
+
+.game-wrapper {
+  width: 1100px;
+  margin: auto;
+}
+
+.grid{
+  width: 1000px;
+  height: 600px;
+  border: solid white 1px;
 }
 
 .game-info {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  color: white;
-  margin: 30px;
+  padding: 30px;
+  color: white; 
+  text-transform: uppercase;
 }
-
+.game-info span{
+  margin: 0 50px;
+}
 .start {
   padding: 10px 30px;
   font-size: 16px;
@@ -20,55 +35,60 @@ font-family: 'Lexend Zetta', sans-serif;
   background: black;
   outline: none;
   font-family: 'Lexend Zetta', sans-serif;
+  text-transform: uppercase;
+  margin-left: 50px;
 }
-
 .start:hover {
-  border: green solid 2px;
-  color: green;
+  border: deeppink solid 2px;
+  color: deeppink;
 }
-
 .grid {
   background-color: black;
-  outline: solid white 1px;
   display: flex;
   flex-wrap: wrap;
-  width: 1000px;
   height: 600px;
   margin: auto;
 }
-
 .grid div {
-  font-size: 12px;
-  color: white;
   height: 6.66%;
   width: 10%;
-  /* outline: yellow dashed 1px; */
-}
-
+  /* font-size: 12px;
+  color: white;
+  outline: yellow dashed 1px;*/
+} 
 .grid div.shooter {
   background-image: url(../assets/shooter.png);
   background-repeat: no-repeat;
   background-size: 50%;
   background-position: bottom;
 }
-
 .grid div.alien {
   background-image: url(../assets/pink-alien.png);
   background-repeat: no-repeat;
   background-size: 40%;
   background-position: center;
 }
-
 .grid div.laser {
   background-image: url(../assets/red-laser-beam.png);
   background-repeat: no-repeat;
   background-size: 50%;
   background-position: top;
 }
-
 .grid div.ufo {
   background-image: url(../assets/UFO.png);
   background-repeat: no-repeat;
   background-size: 50%;
   background-position: top;
+}
+
+.start-bg .end-bg{
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: #00000080;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
