@@ -89,7 +89,7 @@ function init() {
         break
       case 32: // space bar to shoot
         shootLaser()
-        startGame()
+        // startGame()
         break
       default:
         console.log('invalid key to move shooter')
@@ -157,16 +157,8 @@ function init() {
         clearInterval(ufoTimer)
         // moveUfo()
       }
-    }, 200)
+    }, 250)
   }
-  // function loopUfo() {
-  //   clearInterval(loopUfo)
-  //   removeUfo()
-  //   setInterval(() => {  
-  //     moveUfo()
-  //   }, 6000) 
-  // }
-    
 
   // Laser
   function addLaser() {
@@ -181,11 +173,7 @@ function init() {
       clearInterval(laserTimer)
       score()
       return
-    } else if (laserPosition <= 0){
-      cells[laserPosition].classList.remove('laser')
-      clearInterval(laserTimer)
-      console.log('lazer stops')
-    }
+    } 
     cells[laserPosition].classList.add('laser')
   }
 
@@ -200,9 +188,11 @@ function init() {
     // const laserCount = 0 //does this have a purpose?
     laserPosition = shooterPosition
     laserTimer = setInterval(() => {
-      removeLaser()
-      laserPosition = laserPosition - 10
-      addLaser()
+      if (laserPosition > 0){
+        removeLaser()
+        laserPosition = laserPosition - 10
+        addLaser()
+      }
     }, 50) 
   } 
 
@@ -214,9 +204,6 @@ function init() {
       moveAliens()
       addAliens()
     }, 500)
-    // moveUfo()
-    // bgAudio.src = '../sounds/spaceinvaders1.mpeg'
-    // bgAudio.play() 
   }
   function score() {
     currentScore = currentScore + 10
@@ -242,12 +229,7 @@ function init() {
     endPopUp.textContent = `Game over. You Lose! Final score: ${currentScore}`
     console.log(endPopUp)
   }
-  function playAudio() {
-    bgAudio.src = '../sounds/spaceinvaders1.mpeg'
-    bgAudio.volume = 0.1
-    bgAudio.play() 
-  }
-  function reload(){
+  function reload() {
     window.location.reload()
   }
 
@@ -255,7 +237,7 @@ function init() {
   makeGrid()
   addShooter()
   addAliens()
-  startBtn.addEventListener('click', startGame, playAudio)
+  startBtn.addEventListener('click', startGame)
   resetBtn.addEventListener('click', reload)
   document.addEventListener('keydown', moveShooter)
 }
