@@ -9,8 +9,10 @@ function init() {
   // * GAME VARIABLES
 
   const startBtn = document.querySelector('.start')
+  const resetBtn = document.querySelector('.reset')
   const playerScore = document.querySelector('.player-score')
   const audio = document.querySelector('.sound')
+  const bgAudio = document.querySelector('.bg-sound')
   const startPopUp = document.querySelector('.start-pop-up')
   const endPopUp = document.querySelector('.end-pop-up')
   
@@ -143,27 +145,27 @@ function init() {
     cells[ufoPosition].classList.remove('ufo')
   }
   function moveUfo() {
-    // audio.src = '../sounds/ufo2.wav'
-    // audio.play()
     ufoTimer = setInterval(() => {
       if (ufoCount < 10) {
         ufoCount++
         removeUfo()
         ufoPosition = ufoPosition - 1
         addUfo()
+        audio.src = '../sounds/ufo_highpitch.wav'
+        audio.play()
       } else if (ufoCount === 10 ) {
         clearInterval(ufoTimer)
-        moveUfo()
+        // moveUfo()
       }
-    }, 50)
+    }, 200)
   }
-  function loopUfo() {
-    clearInterval(loopUfo)
-    removeUfo()
-    setInterval(() => {  
-      moveUfo()
-    }, 6000) 
-  }
+  // function loopUfo() {
+  //   clearInterval(loopUfo)
+  //   removeUfo()
+  //   setInterval(() => {  
+  //     moveUfo()
+  //   }, 6000) 
+  // }
     
 
   // Laser
@@ -172,11 +174,14 @@ function init() {
       const hitAlien = aliens.find(alien => alien.currentIndex === laserPosition)
       aliens = aliens.filter(alien => alien.isAlive !== false)
       hitAlien.isAlive = !hitAlien.isAlive
-      cells[laserPosition].classList.remove('alien')    
+      cells[laserPosition].classList.remove('alien')
+      audio.src = '../sounds/invaderkilled.wav'
+      audio.volume = 0.1
+      audio.play()    
       clearInterval(laserTimer)
       score()
       return
-    } else if (laserPosition <= 9 ){
+    } else if (laserPosition <= 0){
       cells[laserPosition].classList.remove('laser')
       clearInterval(laserTimer)
       console.log('lazer stops')
@@ -189,6 +194,7 @@ function init() {
   }
   function shootLaser() {
     audio.src = '../sounds/laser1.wav'
+    audio.volume = 0.1
     audio.play()
     clearInterval(laserTimer)
     // const laserCount = 0 //does this have a purpose?
@@ -208,13 +214,17 @@ function init() {
       moveAliens()
       addAliens()
     }, 500)
-    moveUfo()
-    
+    // moveUfo()
+    // bgAudio.src = '../sounds/spaceinvaders1.mpeg'
+    // bgAudio.play() 
   }
   function score() {
     currentScore = currentScore + 10
     playerScore.textContent = currentScore
     winGame()
+    if (currentScore === 50 || currentScore === 100 || currentScore === 150 || currentScore === 200 ) {
+      moveUfo()
+    }
   }
   function winGame() {
     if (currentScore === 250) {
@@ -232,12 +242,21 @@ function init() {
     endPopUp.textContent = `Game over. You Lose! Final score: ${currentScore}`
     console.log(endPopUp)
   }
+  function playAudio() {
+    bgAudio.src = '../sounds/spaceinvaders1.mpeg'
+    bgAudio.volume = 0.1
+    bgAudio.play() 
+  }
+  function reload(){
+    window.location.reload()
+  }
 
   // * EVENTS   
   makeGrid()
   addShooter()
   addAliens()
-  startBtn.addEventListener('click', startGame)
+  startBtn.addEventListener('click', startGame, playAudio)
+  resetBtn.addEventListener('click', reload)
   document.addEventListener('keydown', moveShooter)
 }
 window.addEventListener('DOMContentLoaded', init)
