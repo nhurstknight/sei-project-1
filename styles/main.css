@@ -10,12 +10,11 @@ background-color: rgba();
 
 
 .game-wrapper {
-  width: 1000px;
+  width: 800px;;
   margin: auto;
 }
 
 .grid{
-  width: 1000px;
   height: 400px;
   border: solid white 1px;
   box-shadow: 5px 5px 10px #d6dddf;
