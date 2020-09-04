@@ -12,7 +12,7 @@ function init() {
   const resetBtn = document.querySelector('.reset')
   const playerScore = document.querySelector('.player-score')
   const audio = document.querySelector('.sound')
-  const bgAudio = document.querySelector('.bg-sound')
+  // const bgAudio = document.querySelector('.bg-sound')
   const startPopUp = document.querySelector('.start-pop-up')
   const endPopUp = document.querySelector('.end-pop-up')
   
@@ -167,9 +167,7 @@ function init() {
       aliens = aliens.filter(alien => alien.isAlive !== false)
       hitAlien.isAlive = !hitAlien.isAlive
       cells[laserPosition].classList.remove('alien')
-      audio.src = '../sounds/invaderkilled.wav'
-      audio.volume = 0.1
-      audio.play()    
+      hitAlienSound()
       clearInterval(laserTimer)
       score()
       return
@@ -181,9 +179,7 @@ function init() {
     cells[laserPosition].classList.remove('laser')
   }
   function shootLaser() {
-    audio.src = '../sounds/laser1.wav'
-    audio.volume = 0.1
-    audio.play()
+    laserSound()
     clearInterval(laserTimer)
     // const laserCount = 0 //does this have a purpose?
     laserPosition = shooterPosition
@@ -204,6 +200,16 @@ function init() {
       moveAliens()
       addAliens()
     }, 500)
+  }
+  function laserSound() {
+    audio.src = '../sounds/laser1.wav'
+    audio.volume = 0.05
+    audio.play()  
+  }
+  function hitAlienSound() {
+    audio.src = '../sounds/invaderkilled.wav'
+    audio.volume = 0.05
+    audio.play()    
   }
   function score() {
     currentScore = currentScore + 10
