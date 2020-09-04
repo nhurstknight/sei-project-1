@@ -48,6 +48,7 @@ function init() {
   
   let ufoPosition = 9
   let ufoTimer
+  let ufoCount = 0
   
   let laserPosition
   let laserTimer
@@ -60,7 +61,7 @@ function init() {
       grid.appendChild(cell)
       cells.push(cell)
       cell.setAttribute('id', i) 
-      cell.textContent = i //remove this later
+      // cell.textContent = i //remove this later
       setTimeout(() => {
       }, 5000)
     }  
@@ -109,7 +110,7 @@ function init() {
   function moveAliens() {
     const finalAlienIndex = movingRight ? aliens[aliens.length - 1].currentIndex : aliens[0].currentIndex
     const x = finalAlienIndex % width 
-    if (finalAlienIndex >= 140) {
+    if (finalAlienIndex >= 139) {
       gameOver()
       clearInterval(alienTimer)
     } else if ((x === width - 1 && movingRight) || (x === 0  && !movingRight)) { 
@@ -145,16 +146,25 @@ function init() {
     // audio.src = '../sounds/ufo2.wav'
     // audio.play()
     ufoTimer = setInterval(() => {
-      if (ufoPosition > 0) {
+      if (ufoCount < 10) {
+        ufoCount++
         removeUfo()
         ufoPosition = ufoPosition - 1
         addUfo()
-      // } else {
-      //   clearInterval(ufoTimer)
+      } else if (ufoCount === 10 ) {
+        clearInterval(ufoTimer)
+        moveUfo()
       }
-    }, 500)
+    }, 50)
   }
-  
+  function loopUfo() {
+    clearInterval(loopUfo)
+    removeUfo()
+    setInterval(() => {  
+      moveUfo()
+    }, 6000) 
+  }
+    
 
   // Laser
   function addLaser() {
@@ -193,13 +203,13 @@ function init() {
   // Game
   function startGame() {
     clearInterval(alienTimer)
-    // clearInterval(ufoTimer)
     alienTimer = setInterval(() => {
       removeAliens()
       moveAliens()
       addAliens()
     }, 500)
     moveUfo()
+    
   }
   function score() {
     currentScore = currentScore + 10
