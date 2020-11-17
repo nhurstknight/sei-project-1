@@ -42,7 +42,7 @@ Space Invaders is a classic arcade game which was first released in 1978. The pl
 5. My next step was to write the code to add laser. 
 6. I ran into a bug with the alien movement as the original code I wrote meant that the aliens only moved from left to right, however, as per classic Space Invaders I wanted the aliens to move in both directions. I had to refactor the code to resolve this bug.
 7. The next step was to write the a function to track the laser position on the grid and manage collision detection with the aliens. 
-```
+```js
 function addLaser() {
     if (cells[laserPosition].classList.contains('alien')) {
       const hitAlien = aliens.find(alien => alien.currentIndex === laserPosition)
@@ -85,7 +85,7 @@ The biggest win for me was being able to implement the various components of the
 ### Challenges
 One of the biggest challenges was the alien movement within the grid. As mentioned I did have to refactor the code to fix one but, however it has created another bug as the movement is calculated by the position of the last alien in the array. Due to time constraints I was not able to resilve the second bug, however, this is something I would like to improve post course.
 
-```
+```js
 function addAliens() {
   aliens.forEach((alien) => {
     if (alien.isAlive)
@@ -124,7 +124,6 @@ function moveAliens() {
     })
   } 
 }
-
 ```
 
 ## Bugs
