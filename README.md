@@ -19,6 +19,7 @@ This was a solo project and we were given 8 days to complete the project.
 ## Technologies & Tools
 
 **Tech:** HTML5, CSS3, JavaScript
+
 **Tools:** VSCode,Eslint, Git & GitHub
 
 
