@@ -4,7 +4,7 @@ The deployed game can be found [here](https://nhurstknight.github.io/space-invad
 
 ## Brief
 
-The brief for this game was to build a single page grid based game using JavaScript(ES6), CSS3 and HTML5. We were given a choice of classic arcade games to recreate and I chose to make Space Invaders, one of the most popular games ever created.
+The brief for this project was to build a single page grid based game using JavaScript(ES6), CSS3 and HTML5 in 8 days. I chose to recreate the classic game Space Invaders.
 
 The technical requirements were as follows:
 - Render a game in the browser
@@ -16,81 +16,114 @@ The technical requirements were as follows:
 
 This was a solo project and we were given 8 days to complete the project.
 
-## Technologies 
-- Javascript(ES6)
-- HTML5
-- CSS3
-- VSCode
-- Eslint
-- Git
-- GitHub
-- Google Fonts
+## Technologies & Tools
+
+**Tech:** HTML5, CSS3, JavaScript
+**Tools:** VSCode,Eslint, Git & GitHub
+
 
 ## Game Overview & Instructions
-Space Invaders is a classic arcade game which was first released in 1978. 
+Space Invaders is a classic arcade game which was first released in 1978. The player must defeat and descending alien invasion by firing a laser cannon which moves horizontally across the bottom of the screen.
 
-The player must defeat and descending alien invasion by firing a laser cannon which moves horizontally across the bottom of the screen. 
-
-### Instructions
 - **Laser cannon movement:** ← → keys
 - **Shoot laser:** Space bar
 - **Start game:** Start game button 
 - **Play again/restart:** Play again button
 
-### Scoring
 - Each alien is worth 10 points.
 - To win the game the player must hit all 25 aliens. 
 - The game ends if the aliens reach the Earth surface.
 
 ## Process
-I spent time planning the project, breaking tasks into smaller chunks.
+1. I started the process with the planning phase of my project, this involved listing out the key steps or milestones I needed to achieve and sketching a wireframe for my game.
+2. The next step was to set-up my project files and write a fucntion to render the grid.
+3. Once the grid was rendered in the browser, I then wrote my code to add the shooter to the grid and manage the player movement on the grid.
+4. Following this I worte the functions that would render the aliens and allow them to move on the grid. 
+5. My next step was to write the code to add laser. 
+6. I ran into a bug with the alien movement as the original code I wrote meant that the aliens only moved from left to right, however, as per classic Space Invaders I wanted the aliens to move in both directions. I had to refactor the code to resolve this bug.
+7. The next step was to write the a function to track the laser position on the grid and manage collision detection with the aliens. 
+```
+function addLaser() {
+    if (cells[laserPosition].classList.contains('alien')) {
+      const hitAlien = aliens.find(alien => alien.currentIndex === laserPosition)
+      aliens = aliens.filter(alien => alien.isAlive !== false)
+      hitAlien.isAlive = !hitAlien.isAlive
+      cells[laserPosition].classList.remove('alien')
+      hitAlienSound()
+      clearInterval(laserTimer)
+      score()
+      return
+    } 
+    cells[laserPosition].classList.add('laser')
+  }
+
+  function removeLaser() {
+    cells[laserPosition].classList.remove('laser')
+  }
+  function shootLaser() {
+    laserSound()
+    clearInterval(laserTimer)
+    // const laserCount = 0 //does this have a purpose?
+    laserPosition = shooterPosition
+    laserTimer = setInterval(() => {
+      if (laserPosition > 0){
+        removeLaser()
+        laserPosition = laserPosition - 10
+        addLaser()
+      }
+    }, 50) 
+  } 
+```
+8. After this I wrote the code for win logic and scoring.
+9. Finally I then moved onto styling and adding features such as audio.
+
 
 ## Wins & challenges
 ### Wins
-The biggest win for me was being able to implement the various components of the game as I did not have much experience writing in JavaScript prior to starting at GA.
+The biggest win for me was being able to implement the various components of the game and have a functioning application by the end of the project. It was great learning curve for me as I had experience of planning a project, breaking large tasks into smaller problems and utilising pseudocode when writing code. 
 
 ### Challenges
-One of the biggest challenges was the alien movement within the grid.  I initially wrote a function for this and it worked, however, it was reliant on the alien position increasing by +1 on the grid. This meant that the aliens were not moving from between the horizontal boundaries of the grid as expected in traditional Space Invaders. I was able to refactor the code to overcome this, however it has created another bug as the movement is calculated by the position of the last alien in the array. This is a bug I would like to resolve once I complete the course. 
+One of the biggest challenges was the alien movement within the grid. As mentioned I did have to refactor the code to fix one but, however it has created another bug as the movement is calculated by the position of the last alien in the array. Due to time constraints I was not able to resilve the second bug, however, this is something I would like to improve post course.
 
 ```
-  function addAliens() {
-    aliens.forEach((alien) => {
-      if (alien.isAlive)
-        cells[alien.currentIndex].classList.add('alien')
+function addAliens() {
+  aliens.forEach((alien) => {
+    if (alien.isAlive)
+      cells[alien.currentIndex].classList.add('alien')
+  })
+}
+function removeAliens() {
+  aliens.forEach((alien) => {
+    cells[alien.currentIndex].classList.remove('alien')
+  })
+}
+function moveAliens() {
+  const finalAlienIndex = movingRight ? aliens[aliens.length - 1].currentIndex : aliens[0].currentIndex
+  const x = finalAlienIndex % width 
+  if (finalAlienIndex >= 139) {
+    gameOver()
+    clearInterval(alienTimer)
+  } else if ((x === width - 1 && movingRight) || (x === 0  && !movingRight)) { 
+    aliens = aliens.map(alien => {
+      return {
+        ...alien, currentIndex: alien.currentIndex + width
+      }
     })
-  }
-  function removeAliens() {
-    aliens.forEach((alien) => {
-      cells[alien.currentIndex].classList.remove('alien')
+    movingRight = !movingRight
+  } else if (movingRight) {
+    aliens = aliens.map(alien => {
+      return {
+        ...alien, currentIndex: alien.currentIndex + 1
+      }
     })
-  }
-  function moveAliens() {
-    const finalAlienIndex = movingRight ? aliens[aliens.length - 1].currentIndex : aliens[0].currentIndex
-    const x = finalAlienIndex % width 
-    if (finalAlienIndex >= 139) {
-      gameOver()
-      clearInterval(alienTimer)
-    } else if ((x === width - 1 && movingRight) || (x === 0  && !movingRight)) { 
-      aliens = aliens.map(alien => {
-        return {
-          ...alien, currentIndex: alien.currentIndex + width
-        }
-      })
-      movingRight = !movingRight
-    } else if (movingRight) {
-      aliens = aliens.map(alien => {
-        return {
-          ...alien, currentIndex: alien.currentIndex + 1
-        }
-      })
-    } else if (!movingRight) { 
-      aliens = aliens.map(alien => {
-        return {
-          ...alien, currentIndex: alien.currentIndex - 1
-        }
-      })
-    } 
-  }
+  } else if (!movingRight) { 
+    aliens = aliens.map(alien => {
+      return {
+        ...alien, currentIndex: alien.currentIndex - 1
+      }
+    })
+  } 
+}
 
 ```
 
@@ -107,4 +140,3 @@ I had a few bugs that I was not able to fix in the time constraints of the proje
 - Increase the speed of the last alien on the grid
 - Add multiple levels with increasing level of difficultly
 - High score board functionality using local storage
----
