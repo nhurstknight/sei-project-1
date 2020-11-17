@@ -47,7 +47,7 @@ I spent time planning the project, breaking tasks into smaller chunks.
 
 ## Wins & challenges
 ### Wins
-* The biggest win for me was being able to implement the various components of the game as I did not have much experience writing in JavaScript prior to starting at GA.
+The biggest win for me was being able to implement the various components of the game as I did not have much experience writing in JavaScript prior to starting at GA.
 
 ### Challenges
 One of the biggest challenges was the alien movement within the grid.  I initially wrote a function for this and it worked, however, it was reliant on the alien position increasing by +1 on the grid. This meant that the aliens were not moving from between the horizontal boundaries of the grid as expected in traditional Space Invaders. I was able to refactor the code to overcome this, however it has created another bug as the movement is calculated by the position of the last alien in the array. This is a bug I would like to resolve once I complete the course. 
