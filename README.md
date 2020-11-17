@@ -1,7 +1,6 @@
 # SEI-project-1 - Space Invaders
 
 The deployed game can be found [here](https://nhurstknight.github.io/space-invaders/).
----
 
 ## Brief
 
