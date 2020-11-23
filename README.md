@@ -140,3 +140,8 @@ I had a few bugs that I was not able to fix in the time constraints of the proje
 - Increase the speed of the last alien on the grid.
 - Add multiple levels with increasing level of difficultly.
 - High score board functionality using local storage.
+
+## Key Learnings
+- How to plan a project.
+- Breaking down large problems into smaller more digestable chinks of work.
+- Writing vanilla JavaScript functions.
